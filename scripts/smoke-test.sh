@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-PROMPT='Analyze current space weather risk using NASA and NOAA data.'
+PROMPT='Analyze current space weather risk using NASA and NOAA data; include optional ESA provider status if available.'
 
 echo "Checking frontend health..."
 curl -fsS http://localhost:3000/api/health >/dev/null
