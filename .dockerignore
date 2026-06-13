@@ -1,0 +1,12 @@
+.git
+**/.git
+**/node_modules
+**/dist
+**/.next
+**/target
+**/__pycache__
+**/*.pyc
+**/.env
+**/.env.*
+!**/.env.example
+PROJECT_STATUS_INTEGRATION_REPORT.md

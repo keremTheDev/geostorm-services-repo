@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geostorm-ai.local/contracts/ai_insight_response.schema.json",
+  "title": "GeoStorm AI Insight Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "analysis_id",
+    "summary",
+    "risk_level",
+    "current_risk_level",
+    "forecast_risk_level",
+    "risk_basis",
+    "context",
+    "mcp_transport",
+    "alert_published",
+    "queue_status",
+    "timestamp"
+  ],
+  "properties": {
+    "analysis_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "current_risk_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "forecast_risk_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "risk_basis": {
+      "type": "string",
+      "enum": ["highest_current_or_forecast", "highest_detected", "unknown"]
+    },
+    "context": {
+      "$ref": "space_weather_context.schema.json"
+    },
+    "mcp_transport": {
+      "type": "string",
+      "enum": ["grpc", "http"]
+    },
+    "alert_published": {
+      "type": "boolean"
+    },
+    "queue_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["published", "message"],
+      "properties": {
+        "published": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

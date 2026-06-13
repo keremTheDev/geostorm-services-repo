@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geostorm-ai.local/contracts/space_weather_context.schema.json",
+  "title": "GeoStorm Space Weather Context",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "source",
+    "fetched_at",
+    "date_window",
+    "noaa_swpc_alerts",
+    "nasa_donki_cmes",
+    "risk_signals",
+    "errors"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "const": "geostorm-mcp-server"
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "date_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startDate", "endDate"],
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "endDate": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      }
+    },
+    "noaa_swpc_alerts": {
+      "type": "array"
+    },
+    "nasa_donki_cmes": {
+      "type": "array"
+    },
+    "risk_signals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["has_noaa_alerts", "cme_count", "highest_detected_level"],
+      "properties": {
+        "has_noaa_alerts": {
+          "type": "boolean"
+        },
+        "cme_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "highest_detected_level": {
+          "type": "string",
+          "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+!.env.local.example
+node_modules/
+.next/
+dist/
+target/
+__pycache__/
+*.pyc
+reports/
+alert_reports/
+*.log
+*.codex
+*.agents

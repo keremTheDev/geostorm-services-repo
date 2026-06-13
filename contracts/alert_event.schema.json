@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geostorm-ai.local/contracts/alert_event.schema.json",
+  "title": "GeoStorm Alert Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "activity_id",
+    "alert_level",
+    "details",
+    "timestamp"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "activity_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alert_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "current_risk_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "forecast_risk_level": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5", "CRITICAL", "UNKNOWN"]
+    },
+    "risk_basis": {
+      "type": "string",
+      "enum": ["highest_current_or_forecast", "highest_detected", "unknown"]
+    },
+    "details": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
