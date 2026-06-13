@@ -48,6 +48,7 @@ scripts/run-local-build.sh
 ## Run Mode 2: Registry Images
 
 The `docker-compose.images.yml` file runs the same system from prebuilt GHCR images and does not require service source folders locally.
+For this course submission, the image-based compose file uses the `latest` GHCR image tag by default. The source-build compose remains available for reproducible local builds from the service repositories.
 
 ```bash
 git clone <root-repo-url>
@@ -71,6 +72,15 @@ scripts/run-images.sh
 ```
 
 GHCR images must exist and be public or accessible to your Docker login before image mode can pull them.
+
+Default image variables use `latest`:
+
+```env
+AI_ENGINE_IMAGE=ghcr.io/<owner>/geostorm-ai-engine:latest
+MCP_SERVER_IMAGE=ghcr.io/<owner>/geostorm-mcp-server:latest
+ALERT_SERVICE_IMAGE=ghcr.io/<owner>/geostorm-alert-service:latest
+FRONTEND_GATEWAY_IMAGE=ghcr.io/<owner>/geostorm-frontend-gateway:latest
+```
 
 ## Required Environment Values
 

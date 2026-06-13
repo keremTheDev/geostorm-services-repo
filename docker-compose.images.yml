@@ -40,7 +40,7 @@ services:
       - geostorm-net
 
   geostorm-mcp-server:
-    image: ${MCP_SERVER_IMAGE:-ghcr.io/${GITHUB_CONTAINER_OWNER:-replace_me}/geostorm-mcp-server:${IMAGE_TAG:-final-submission}}
+    image: ${MCP_SERVER_IMAGE:-ghcr.io/replace_me/geostorm-mcp-server:latest}
     container_name: geostorm-mcp-server
     restart: unless-stopped
     environment:
@@ -65,7 +65,7 @@ services:
       - geostorm-net
 
   geostorm-ai-engine:
-    image: ${AI_ENGINE_IMAGE:-ghcr.io/${GITHUB_CONTAINER_OWNER:-replace_me}/geostorm-ai-engine:${IMAGE_TAG:-final-submission}}
+    image: ${AI_ENGINE_IMAGE:-ghcr.io/replace_me/geostorm-ai-engine:latest}
     container_name: geostorm-ai-engine
     restart: unless-stopped
     environment:
@@ -104,7 +104,7 @@ services:
       - geostorm-net
 
   geostorm-alert-service:
-    image: ${ALERT_SERVICE_IMAGE:-ghcr.io/${GITHUB_CONTAINER_OWNER:-replace_me}/geostorm-alert-service:${IMAGE_TAG:-final-submission}}
+    image: ${ALERT_SERVICE_IMAGE:-ghcr.io/replace_me/geostorm-alert-service:latest}
     container_name: geostorm-alert-service
     restart: unless-stopped
     environment:
@@ -134,7 +134,7 @@ services:
       - geostorm-net
 
   geostorm-frontend-gateway:
-    image: ${FRONTEND_GATEWAY_IMAGE:-ghcr.io/${GITHUB_CONTAINER_OWNER:-replace_me}/geostorm-frontend-gateway:${IMAGE_TAG:-final-submission}}
+    image: ${FRONTEND_GATEWAY_IMAGE:-ghcr.io/replace_me/geostorm-frontend-gateway:latest}
     container_name: geostorm-frontend-gateway
     restart: unless-stopped
     environment:
