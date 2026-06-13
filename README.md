@@ -10,7 +10,7 @@ This repository provides Docker Compose files, shared contracts, canonical envir
 | --- | --- | --- |
 | Frontend Gateway | Next.js dashboard and `/api/analyze` gateway | `ghcr.io/<owner>/geostorm-frontend-gateway:<tag>` |
 | AI Engine | FastAPI risk analysis and RabbitMQ publisher | `ghcr.io/<owner>/geostorm-ai-engine:<tag>` |
-| MCP Server | NASA/NOAA data service over gRPC and HTTP health/debug | `ghcr.io/<owner>/geostorm-mcp-server:<tag>` |
+| MCP Server | NASA/NOAA data service plus optional ESA SWE/HAPI context over gRPC and HTTP health/debug | `ghcr.io/<owner>/geostorm-mcp-server:<tag>` |
 | Alert Service | Rust RabbitMQ consumer, PostgreSQL writer, text report artifact generator | `ghcr.io/<owner>/geostorm-alert-service:<tag>` |
 
 Service repository links:
@@ -91,6 +91,11 @@ Core runtime values:
 - `OPENROUTER_API_KEY`
 - `OPENROUTER_MODEL`
 - `NASA_API_KEY`
+- `ESA_ENABLED=false`
+- `ESA_HAPI_BASE_URL` if ESA is enabled
+- `ESA_HAPI_DATASET_ID` if ESA is enabled
+- `ESA_HAPI_PARAMETERS` optional comma-separated HAPI parameters
+- `ESA_ACCESS_TOKEN` or `ESA_TOKEN_URL`/`ESA_CLIENT_ID`/`ESA_CLIENT_SECRET` if the selected ESA/HAPI endpoint requires authentication
 - `POSTGRES_DB`
 - `POSTGRES_USER`
 - `POSTGRES_PASSWORD`
@@ -119,6 +124,22 @@ Image-mode values:
 - RabbitMQ UI: `http://localhost:15672`
 - PostgreSQL: `localhost:5432`
 
+## Optional ESA SWE/HAPI Provider
+
+ESA ingestion is implemented in the MCP server as a supplementary provider and is disabled by default. NASA DONKI and NOAA SWPC remain the canonical risk sources; ESA status/data are added to the normalized context as provider metadata and do not override `risk_level`, `current_risk_level`, `forecast_risk_level`, or `risk_basis`.
+
+The implementation expects a HAPI-compatible server. HAPI clients discover data with `/catalog`, inspect datasets with `/info`, and fetch records with `/data`. Configure the verified ESA/HAPI base URL and dataset before enabling it:
+
+```env
+ESA_ENABLED=true
+ESA_HAPI_BASE_URL=https://example-esa-hapi-server/hapi
+ESA_HAPI_DATASET_ID=replace_with_verified_dataset
+ESA_HAPI_PARAMETERS=replace,with,parameters
+ESA_HAPI_LOOKBACK_HOURS=24
+```
+
+If the selected ESA SWE/HAPI source requires authentication, either provide `ESA_ACCESS_TOKEN` directly or configure OAuth client credentials with `ESA_TOKEN_URL`, `ESA_CLIENT_ID`, and `ESA_CLIENT_SECRET`. Leave `ESA_ENABLED=false` until those values are confirmed; missing ESA configuration degrades to `esa_source_status=disabled` or `missing_configuration` and does not break NASA/NOAA analysis.
+
 ## Validation
 
 ```bash
@@ -131,6 +152,7 @@ scripts/check-secrets.sh
 ## Known Limitations
 
 - Report artifacts are text files, not PDFs.
+- ESA SWE/HAPI is optional and config-driven because a public unauthenticated ESA HAPI endpoint/dataset is not assumed.
 - Email delivery is disabled by default with `EMAIL_ENABLED=false`.
 - SMTP/email delivery requires explicit configuration and is not assumed.
 - No authentication is included.
