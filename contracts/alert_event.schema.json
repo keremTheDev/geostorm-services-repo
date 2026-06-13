@@ -41,6 +41,16 @@
       "type": "string",
       "enum": ["highest_current_or_forecast", "highest_detected", "unknown"]
     },
+    "esa_source_status": {
+      "type": "string",
+      "enum": ["disabled", "ok", "missing_configuration", "missing_credentials", "unavailable"]
+    },
+    "esa_dataset_id": {
+      "type": "string"
+    },
+    "esa_error": {
+      "type": "string"
+    },
     "details": {
       "type": "string",
       "minLength": 1
